@@ -1,0 +1,28 @@
+<table class="table table-hover">
+    <tr>
+        
+        <td>
+            {% autoescape false %}
+            <p>{{ _('prayed %(when)s:', when=momentjs(post.timestamp).fromNow()) }}</p>
+            {% endautoescape %}
+            <p><strong><span id="post{{ post.id }}">{{ post.body }}</span></strong></p>
+			{% if post.language == 'es' and post.language != '' and post.language != g.locale %}
+            <div>
+                <span id="translation{{ post.id }}">
+                    <a href="javascript:translate('{{ post.language }}', '{{ g.locale }}', '#post{{ post.id }}', '#translation{{ post.id }}', '#loading{{ post.id }}');">{{ _('Translate') }}</a>
+                </span>
+                <img id="loading{{ post.id }}" style="display: none" src="/static/img/loading.gif">
+            </div>
+            {% endif %}
+			<div>
+				<br>
+				<p>
+				<span id="pray_count{{ post.id }}">{{ post.prayer_count }} Prayers</span>
+				{% if g.user.is_authenticated %}
+				<span id="pray{{ post.id }}"> | <a href="/pray/{{ post.id }}"><img src="/static/img/pray.png" style="height: 20px;width: auto;"></span>
+				{% endif %}
+				</p>
+			</div>
+        </td>
+    </tr>
+</table>
